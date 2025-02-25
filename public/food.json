@@ -1,0 +1,93 @@
+[
+    {
+      "recipe_id": 1,
+      "recipe_name": "Grilled Chicken Salad",
+      "image": "https://i.ibb.co.com/Z6zKcJB/foods.png",
+      "description": "A healthy salad with grilled chicken, fresh veggies, and a tangy dressing.",
+      "ingredients": [
+        "250 g chicken breast",
+        "100 g lettuce",
+        "50 g cherry tomatoes",
+        "30 ml olive oil",
+        "10 g parmesan cheese"
+      ],
+      "preparing_time": 25,
+      "calories": 350
+    },
+    {
+      "recipe_id": 2,
+      "recipe_name": "Beef Stir Fry",
+      "image": "https://i.ibb.co.com/cCFLbLn/biriyani.png",
+      "description": "A quick and tasty stir fry with tender beef and colorful vegetables.",
+      "ingredients": [
+        "300 g beef strips",
+        "100 g bell peppers",
+        "50 g broccoli",
+        "20 ml soy sauce",
+        "10 g garlic"
+      ],
+      "preparing_time": 20,
+      "calories": 400
+    },
+    {
+      "recipe_id": 3,
+      "recipe_name": "Pasta Carbonara",
+      "image": "https://i.ibb.co.com/W3W4NzX/burger.png",
+      "description": "A creamy and delicious Italian pasta dish.",
+      "ingredients": [
+        "200 g spaghetti",
+        "100 g bacon",
+        "50 g parmesan cheese",
+        "2 eggs",
+        "10 g black pepper"
+      ],
+      "preparing_time": 30,
+      "calories": 500
+    },
+    {
+      "recipe_id": 4,
+      "recipe_name": "Vegetable Curry",
+      "image": "https://i.ibb.co.com/cwDyP1j/food1.jpg",
+      "description": "A flavorful curry made with a variety of fresh vegetables.",
+      "ingredients": [
+        "150 g potatoes",
+        "100 g carrots",
+        "50 g peas",
+        "20 ml coconut milk",
+        "10 g curry powder"
+      ],
+      "preparing_time": 35,
+      "calories": 280
+    },
+    {
+      "recipe_id": 5,
+      "recipe_name": "Mango Smoothie",
+      "image": "https://i.ibb.co.com/YPC5ndj/food2.jpg",
+      "description": "A refreshing tropical smoothie with ripe mangoes.",
+      "ingredients": [
+        "200 g mango",
+        "100 ml milk",
+        "50 g yogurt",
+        "10 g honey",
+        "5 ice cubes"
+      ],
+      "preparing_time": 10,
+      "calories": 150
+    },
+    {
+      "recipe_id": 6,
+      "recipe_name": "Tomato Soup",
+      "image": "https://i.ibb.co.com/NY04WGK/food3.jpg",
+      "description": "A warm and comforting classic tomato soup.",
+      "ingredients": [
+        "300 g tomatoes",
+        "50 g onions",
+        "20 g butter",
+        "10 g basil",
+        "5 g salt"
+      ],
+      "preparing_time": 25,
+      "calories": 200
+    }
+  ]
+  

@@ -1,6 +1,6 @@
 import { FaRegUserCircle } from "react-icons/fa";
-
-const Header = () => {
+import PropTypes from 'prop-types'
+const Header = ({handleSearched}) => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -51,7 +51,7 @@ const Header = () => {
               <path d="m21 21-4.3-4.3"></path>
             </g>
           </svg>
-          <input type="search" required placeholder="Search" />
+          <input onChange={(e) => handleSearched(e)} type="search" required placeholder="Search" />
         </label>
         <span className="bg-green-400 hidden sm:flex p-2 ml-2 rounded-full">
           <FaRegUserCircle className="text-2xl" />
@@ -105,5 +105,9 @@ const Header = () => {
     </div>
   );
 };
+
+Header.propTypes = {
+  handleSearched : PropTypes.func
+}
 
 export default Header;
