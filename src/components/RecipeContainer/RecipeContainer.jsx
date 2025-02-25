@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import RecipeCards from "../RecipeCards/RecipeCards";
 import OrderDetails from "../OrderedDetails/OrderDetails";
+import toast from "react-hot-toast";
+import { addToLS, getFoodItems, removeFromLS } from "../../utils/localStorage";
 
 const RecipeContainer = ({ query }) => {
   const [recipes, setRecipes] = useState([]);
@@ -11,7 +13,7 @@ const RecipeContainer = ({ query }) => {
   const [preparingItems, setPreparingItems] = useState([]);
   const [preparingTime, setPreparingTime] = useState(0);
   const [calories, setCalories] = useState(0);
-
+  const [seeMore, setSeeMore] = useState(false);
   useEffect(() => {
     if (query) {
       const gatherMatched = [];
@@ -33,6 +35,7 @@ const RecipeContainer = ({ query }) => {
     const selectedItem = orderItems.find(
       (orderItem) => orderItem.recipe_id === item.recipe_id
     );
+    removeFromLS(item.recipe_id);
     setPreparingTime(preparingTime + selectedItem?.preparing_time);
     setCalories(calories + selectedItem.calories);
     setPreparingItems([...preparingItems, item]);
@@ -42,24 +45,61 @@ const RecipeContainer = ({ query }) => {
     setOrderItems(remaining);
   };
 
+  const saveData = (data) => {
+    const items = getFoodItems();
+    const newArr = [];
+    for (const id of items) {
+      const findItem = data.find((i) => i.recipe_id === id);
+      newArr.push(findItem);
+    }
+    setOrderItems(newArr);
+  };
+
   useEffect(() => {
     const loadData = async () => {
       const res = await fetch("food.json");
       const data = await res.json();
-      setRecipes(data);
-      setFilteredItems(data);
+      saveData(data);
+      if (!seeMore) {
+        setFilteredItems(data.slice(0, 2));
+      } else {
+        setFilteredItems(data);
+      }
     };
     loadData();
-  }, []);
+  }, [seeMore]);
 
   const handleCook = (item) => {
     const isExist = orderItems.find(
       (orderItem) => orderItem.recipe_id === item.recipe_id
     );
     if (!isExist) {
+      addToLS(item.recipe_id);
       setOrderItems([...orderItems, item]);
+      toast.success("Added to Ordered Item", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          background: "linear-gradient(135deg, #1a1a2e, #16213e)",
+          color: "#f0f0f0",
+          fontSize: "16px",
+          fontWeight: "bold",
+          padding: "12px 20px",
+          borderRadius: "12px",
+          boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
+        },
+        icon: "🔥",
+      });
     } else {
-      alert("");
+      toast.error(`Sorry, ${isExist.recipe_name} is not Available`, {
+        position: "top right",
+        duration: 2000,
+        className: `p-5 font-semibold rounded-lg bg-gradient from-red-600 to red-400`,
+        style: {
+          background: "linear-gradient(135deg, #1a1a2e, #16213e)",
+          color: "white",
+        },
+      });
     }
   };
 
@@ -73,8 +113,8 @@ const RecipeContainer = ({ query }) => {
           elementum mauris aenean neque.{" "}
         </p>
       </div>
-      <section className="flex mt-7 flex-col-reverse sm:flex-row gap-5">
-        <div className="grid-cols-2 grid gap-4 sm:w-3/5">
+      <section className="flex mt-7 mb-5 flex-col-reverse sm:flex-row gap-5">
+        <div className="sm:grid-cols-2 grid gap-4 sm:w-3/5">
           {recipes.map((recipe) => (
             <RecipeCards
               handleCook={handleCook}
@@ -82,6 +122,16 @@ const RecipeContainer = ({ query }) => {
               recipe={recipe}
             ></RecipeCards>
           ))}
+          <div className="self-center mx-auto">
+            {seeMore || (
+              <button
+                onClick={() => setSeeMore(true)}
+                className="btn btn-success text-white"
+              >
+                See More
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="sm:w-2/5">
