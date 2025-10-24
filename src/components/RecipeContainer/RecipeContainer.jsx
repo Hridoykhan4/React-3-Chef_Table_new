@@ -32,12 +32,9 @@ const RecipeContainer = ({ query }) => {
 
   const handlePreparingItem = (item) => {
     setShowWantCook2(true);
-    const selectedItem = orderItems.find(
-      (orderItem) => orderItem.recipe_id === item.recipe_id
-    );
     removeFromLS(item.recipe_id);
-    setPreparingTime(preparingTime + selectedItem?.preparing_time);
-    setCalories(calories + selectedItem.calories);
+    setPreparingTime(preparingTime + item?.preparing_time);
+    setCalories(calories + item.calories);
     setPreparingItems([...preparingItems, item]);
     const remaining = orderItems.filter(
       (orderItem) => orderItem.recipe_id !== item.recipe_id
@@ -54,6 +51,17 @@ const RecipeContainer = ({ query }) => {
     }
     setOrderItems(newArr);
   };
+
+  useEffect(() => {
+    setRecipes((prev) =>
+      prev.map((item) => ({
+        ...item,
+        isDisabled: orderItems.some(
+          (orderItem) => orderItem?.recipe_id === item.recipe_id
+        ),
+      }))
+    );
+  }, [orderItems]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -115,23 +123,31 @@ const RecipeContainer = ({ query }) => {
       </div>
       <section className="flex mt-7 mb-5 flex-col-reverse sm:flex-row gap-5">
         <div className="sm:grid-cols-2 grid gap-4 sm:w-3/5">
-          {recipes.map((recipe) => (
-            <RecipeCards
-              handleCook={handleCook}
-              key={recipe.recipe_id}
-              recipe={recipe}
-            ></RecipeCards>
-          ))}
-          <div className="self-center mx-auto">
-            {seeMore || (
-              <button
-                onClick={() => setSeeMore(true)}
-                className="btn btn-success text-white"
-              >
-                See More
-              </button>
-            )}
-          </div>
+          {recipes.length > 0 ? (
+            recipes.map((recipe) => (
+              <RecipeCards
+                handleCook={handleCook}
+                key={recipe.recipe_id}
+                recipe={recipe}
+              ></RecipeCards>
+            ))
+          ) : (
+            <p className="text-red-600 font-semibold text-lg  flex justify-center items-center">
+              No Items found!! 😢
+            </p>
+          )}
+          {recipes.length > 0 && !query && (
+            <div className="self-center mx-auto">
+              {!seeMore && (
+                <button
+                  onClick={() => setSeeMore(true)}
+                  className="btn btn-success text-white"
+                >
+                  See More
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="sm:w-2/5">

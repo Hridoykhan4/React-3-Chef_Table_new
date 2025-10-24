@@ -57,7 +57,7 @@ const OrderDetails = ({
       {showWantCook2 && (
         <div className="py-2">
           <h2 className="text-lg font-semibold text-center">
-            Want To Cook: {preparingItems.length}
+            Preparing To Cook: {preparingItems.length}
           </h2>
           <hr className="my-3 w-3/4 mx-auto opacity-30" />
           <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -85,10 +85,6 @@ const OrderDetails = ({
                     <td className="text-gray-600 font-medium">
                       {item?.calories} calories
                     </td>
-                    <td
-                      onClick={() => handlePreparingItem(item)}
-                      className="text-gray-600 font-medium"
-                    ></td>
                   </tr>
                 ))}
               </tbody>
